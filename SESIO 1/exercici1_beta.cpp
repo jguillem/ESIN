@@ -34,4 +34,5 @@ int main () {
   cout << "Conjunt: ";
   cout << cj << endl;
   cout << "El cardinal es: " << cj.card() << endl;
+  cout << "porra" << endl;
 }
