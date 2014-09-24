@@ -1,0 +1,45 @@
+#include "cj_enters_din.hpp"
+
+cj_enters::cj_enters(){
+	_inici = new node;
+	_inici->seg = NULL;
+}
+
+cj_enters::node* cj_enters::copia_conjunt(const node* conjunt){
+	node* copia = NULL;
+	if(conjunt != NULL){
+		copia = new node;
+		copia->elem = conjunt->elem;
+		copia->seg = copia_conjunt(conjunt->seg);
+	}
+	return copia;
+}
+
+void cj_enters::esborra_conjunt(node* n){
+	if(n!=NULL){
+		esborra_conjunt(n->seg);
+		delete n;
+	}
+}
+
+cj_enters::cj_enters(const cj_enters &cj){
+	_inici = copia_conjunt(cj._inici);
+}
+
+cj_enters::~cj_enters(){
+	esborra_conjunt(_inici);
+}
+
+bool cj_enters::conte(int e) const{
+	bool conte = false;	
+	node* aux;
+	aux = _inici;
+
+	do{
+		aux->seg = aux->seg->seg;
+		if(aux->elem == e){
+			conte = true;
+		}
+	}while(aux->seg != NULL && aux->elem != e);
+	return conte;
+}
